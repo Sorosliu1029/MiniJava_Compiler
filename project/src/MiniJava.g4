@@ -55,7 +55,7 @@ expression: expression ('&&' | '<' | '+' | '-' | '*' ) expression
            | '(' expression ')'
            ;
 
-ID: [a-zA-z]+ ;
+ID: [a-zA-Z_]+[a-zA-Z0-9_]*;
 
 INT: [0-9]+ ;
 
