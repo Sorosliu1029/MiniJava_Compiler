@@ -1,0 +1,55 @@
+digraph tree {
+    eseq_l0 [shape=box, label="ESEQ"];
+    eseq_l0 -> {cjump_l1, eseq_l1};
+    cjump_l1 [shape=box, label="CJUMP"];
+    cjump_l1 -> {ne_l2, temp_l2, const_l2, t_l2, f_l2};
+    eseq_l1 [shape=box, label="ESEQ"];
+    eseq_l1 -> {seq_l2, eseq_l2};
+    ne_l2 [label="NE"];
+    temp_l2 [shape=box, label="TEMP"];
+    temp_l2 -> a;
+    const_l2 -> zero;
+    zero [label="0"]
+    const_l2 [shape=box, label="CONST"];
+    t_l2 [label="t"];
+    f_l2 [label="f"];
+    seq_l2 [shape=box, label="SEQ"];
+    seq_l2 -> {seq_l31, seq_l32};
+    eseq_l2 [shape=box, label="ESEQ"];
+    eseq_l2 -> {label_l3, r_l3};
+    seq_l31 [shape=box, label="SEQ"];
+    seq_l31 -> {seq_l41, jump_l41};
+    seq_l32 [shape=box, label="SEQ"];
+    seq_l32 -> {seq_l42, jump_l42};
+    label_l3 [shape=box, label="label"];
+    label_l3 -> d_l4;
+    d_l4 [label="d"];
+    r_l3 [label="r"];
+    seq_l41 [shape=box, label="SEQ"];
+    seq_l41 -> {label_l51, move_l51};
+    jump_l41 [shape=box, label="JUMP"];
+    jump_l41 -> d_l51;
+    seq_l42 [shape=box, label="SEQ"];
+    seq_l42 -> {label_l52, move_l52};
+    jump_l42 [shape=box, label="JUMP"];
+    jump_l42 -> d_l52;
+    label_l51 [shape=box, label="label"];
+    label_l51 -> t_l6;
+    move_l51 [shape=box, label="MOVE"];
+    move_l51 -> {temp_l61, b_l61};
+    d_l51 [label="d"];
+    label_l52 [shape=box, label="label"];
+    label_l52 -> f
+    move_l52 [shape=box, label="MOVE"];
+    move_l52 -> {temp_l62, c_l62};
+    d_l52 [label="d"];
+    t_l6 [label="t"];
+    temp_l61 [shape=box, label="TEMP"];
+    temp_l61 -> r_l71;
+    b_l61 [label="b"];
+    temp_l62 [shape=box, label="TEMP"];
+    temp_l62 -> r_l72;
+    c_l62 [label="c"];
+    r_l71 [label="r"];
+    r_l72 [label="r"];
+}
