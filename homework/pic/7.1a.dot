@@ -1,0 +1,18 @@
+digraph tree {
+    MEM1 [shape=box, label="MEM"];
+    plus1 [label="+"];
+    MEM2 [shape=box, label="MEM"];
+    multiple [label="*"];
+    plus2 [label="+"];
+    CONST1 [shape=box, label="CONST"];
+    TEMP [shape=box, label="TEMP"];
+    CONST2 [shape=box, label="CONST"];
+    MEM1 -> plus1;
+    plus1 -> {MEM2, multiple};
+    MEM2 -> b;
+    multiple -> {plus2, CONST1};
+    CONST1 -> w;
+    plus2 -> {TEMP, CONST2};
+    TEMP -> i;
+    CONST2 -> 1;
+}

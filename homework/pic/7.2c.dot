@@ -1,0 +1,24 @@
+digraph tree {
+    move_l1 [shape=box, label="MOVE"];
+    move_l1 -> {mem_l2, const_l2};
+    mem_l2 [shape=box, label="MEM"];
+    mem_l2 -> binop_l3;
+    const_l2 [shape=box, label="CONST"];
+    const_l2 -> zero;
+    zero [label="0"];
+    binop_l3 [shape=box, label="BINOP"];
+    binop_l3 -> {mem_l4, plus_l4, binop_l4};
+    mem_l4 [shape=box, label="MEM"];
+    mem_l4 -> e;
+    plus_l4 [label="PLUS"];
+    binop_l4 [shape=box, label="BINOP"];
+    binop_l4 -> {binop_l5, MUL, const_l5};
+    binop_l5 [shape=box, label="BINOP"];
+    binop_l5 -> {i, plus_l6, const_l6};
+    const_l5 [shape=box, label="CONST"];
+    const_l5 -> w;
+    plus_l6 [label="PLUS"];
+    const_l6 [shape=box, label="CONST"];
+    const_l6 -> one;
+    one [label="1"];
+}
