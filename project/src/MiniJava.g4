@@ -67,7 +67,7 @@ ID: LETTER (LETTER|DIGIT|'_')*
 fragment LETTER  : [a-zA-Z] ;
 fragment DIGIT   : [0-9] ;
 
-INT: [0-9]+ ;
+INT: '-'? [0-9]+ ;
 
 LINECOMMENT: '//' .*? ('\r')? '\n' -> skip;
 BLOCKCOMMENT:  '/**' ('\r')? '\n' (' *' .*? ('\r')? '\n')*? ' */' -> skip;
