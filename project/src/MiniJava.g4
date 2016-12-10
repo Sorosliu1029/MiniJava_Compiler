@@ -1,7 +1,7 @@
 grammar MiniJava;
 
 //start rule: goal
-goal: packageDeclaration (importDeclaration)* mainClass (classDeclaration)* ;
+goal: packageDeclaration? (importDeclaration)* mainClass (classDeclaration)* ;
 
 packageDeclaration: 'package' ID ';' ;
 
@@ -62,8 +62,8 @@ expression: expression ('&&' | '<' | '+' | '-' | '*' ) expression
 
 ID: [a-zA-Z_]+[a-zA-Z0-9_]*
     // invalid identifier
-    | [0-9]+[a-zA-Z0-9_]*[a-zA-Z]+            {System.err.println("Identifier cannot start with number: " + getText());}
-    | [a-zA-Z_\-]+[a-zA-Z0-9_\-]+             {System.err.println("Identifier cannot contain '-': " + getText());}
+    | [0-9]+[a-zA-Z0-9_]*[a-zA-Z]+            {System.err.println("[Lexical Error]:\n\tIdentifier cannot start with number: " + getText());}
+    | [a-zA-Z_\-]+[a-zA-Z0-9_\-]+             {System.err.println("[Lexical Error]:\n\tIdentifier cannot contain '-': " + getText());}
     ;
 
 INT: [0-9]+ ;
