@@ -5,7 +5,7 @@ goal: mainClass (classDeclaration)* ;
 
 mainClass: 'class' ID '{'
                 'public' 'static' 'void' 'main' '(' 'String' '[' ']' ID ')' '{'
-                    statement
+                    (statement)*
                 '}'
             '}' ;
 
@@ -38,6 +38,7 @@ statement: '{' (statement)* '}'
           | 'System.out.println' '(' expression ')' ';'
           | ID '=' expression ';'
           | ID '[' expression ']' '=' expression ';'
+          | varDeclaration
           ;
 
 expression: expression ('&&' | '<' | '+' | '-' | '*' ) expression
