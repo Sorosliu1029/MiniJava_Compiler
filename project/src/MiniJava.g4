@@ -60,11 +60,12 @@ expression: expression ('&&' | '<' | '+' | '-' | '*' ) expression
            | '(' expression ')'
            ;
 
-ID: [a-zA-Z_]+[a-zA-Z0-9_]*
+ID: LETTER (LETTER|DIGIT|'_')*
     // invalid identifier
-    | [0-9]+[a-zA-Z0-9_]*[a-zA-Z]+            {System.err.println("[Lexical Error]:\n\tIdentifier cannot start with number: " + getText());}
-    | [a-zA-Z_\-]+[a-zA-Z0-9_\-]+             {System.err.println("[Lexical Error]:\n\tIdentifier cannot contain '-': " + getText());}
+    | DIGIT (LETTER|DIGIT|'_')* (LETTER|'_')+         {System.err.println("[Lexical Error]:\n\tIdentifier cannot start with number: " + getText());}
     ;
+fragment LETTER  : [a-zA-Z] ;
+fragment DIGIT   : [0-9] ;
 
 INT: [0-9]+ ;
 
