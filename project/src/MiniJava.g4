@@ -1,7 +1,11 @@
 grammar MiniJava;
 
 //start rule: goal
-goal: mainClass (classDeclaration)* ;
+goal: packageDeclaration (importDeclaration)* mainClass (classDeclaration)* ;
+
+packageDeclaration: 'package' ID ';' ;
+
+importDeclaration: 'import' ID ('.' ID)* ('*')? ';' ;
 
 mainClass: 'class' ID '{'
                 'public' 'static' 'void' 'main' '(' 'String' '[' ']' ID ')' '{'
@@ -64,7 +68,8 @@ ID: [a-zA-Z_]+[a-zA-Z0-9_]*
 
 INT: [0-9]+ ;
 
-COMMENT: '//' .*? ('\r')? '\n' -> skip ;
+LINECOMMENT: '//' .*? ('\r')? '\n' -> skip;
+BLOCKCOMMENT:  '/**' ('\r')? '\n' (' *' .*? ('\r')? '\n')*? ' */' -> skip;
 
 WS: [ \t\r\n]+ -> skip ;
 
