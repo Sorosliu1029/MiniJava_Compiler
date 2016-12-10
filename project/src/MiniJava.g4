@@ -56,7 +56,10 @@ expression: expression ('&&' | '<' | '+' | '-' | '*' ) expression
            | '(' expression ')'
            ;
 
-ID: [a-zA-Z_]+[a-zA-Z0-9_]*;
+ID: [a-zA-Z_]+[a-zA-Z0-9_]*
+    | [0-9]+[a-zA-Z0-9_]*[a-zA-Z]+            {System.err.println("Identifier cannot start with number: " + getText());}
+    | [a-zA-Z_\-]+[a-zA-Z0-9_\-]+             {System.err.println("Identifier cannot contain '-': " + getText());}
+    ;
 
 INT: [0-9]+ ;
 
