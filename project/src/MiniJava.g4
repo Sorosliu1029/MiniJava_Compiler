@@ -49,6 +49,9 @@ expression: expression ('&&' | '<' | '+' | '-' | '*' ) expression
            | expression '[' expression ']'
            | expression '.' 'length'
            | expression '.' ID '(' (expression (',' expression)* )? ')'
+            // parenthesis dismatch in function call
+           | expression '.' ID '(' (expression (',' expression)* )? ')' ')' {notifyErrorListeners("Too many parentheses");}
+           | expression '.' ID '(' (expression (',' expression)* )?         {notifyErrorListeners("Missing closing ')'");}
            | INT
            | 'true'
            | 'false'
