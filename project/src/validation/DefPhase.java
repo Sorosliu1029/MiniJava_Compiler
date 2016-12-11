@@ -2,9 +2,9 @@ package validation;
 
 import antlr_gen.MiniJavaBaseListener;
 import antlr_gen.MiniJavaParser;
-import compiler_utils.GlobalScope;
-import compiler_utils.Scope;
-import compiler_utils.Symbol;
+import compiler_utils.*;
+import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
 
 /**
@@ -27,9 +27,45 @@ public class DefPhase extends MiniJavaBaseListener {
     public void enterMethodDeclaration(MiniJavaParser.MethodDeclarationContext ctx) {
         String methodName = ctx.ID().getText();
         int typeTokenType = ctx.type().start.getType();
-        System.out.println(ctx.type().getText());
-        System.out.println(typeTokenType);
         Symbol.Type type = CheckSymbols.getType(typeTokenType);
-        System.out.println("" + methodName + type);
+
+        FunctionSymbol function = new FunctionSymbol(methodName, type, currentScope);
+        currentScope.define(function);
+        saveScope(ctx, function);
+        currentScope = function;
+    }
+
+    void saveScope(ParserRuleContext ctx, Scope s) {
+        scopes.put(ctx, s);
+    }
+
+    public void exitMethodDeclaration(MiniJavaParser.MethodDeclarationContext ctx) {
+        System.out.println(currentScope);
+        currentScope = currentScope.getEnclosingScope();
+    }
+
+    public void enterMethodBlock(MiniJavaParser.MethodBlockContext ctx) {
+        currentScope = new LocalScope(currentScope);
+        saveScope(ctx, currentScope);
+    }
+
+    public void exitMethodBlock(MiniJavaParser.MethodBlockContext ctx) {
+        System.out.println(currentScope);
+        currentScope = currentScope.getEnclosingScope();
+    }
+
+    public void exitFormalParameter(MiniJavaParser.FormalParameterContext ctx) {
+        defineVar(ctx.type(), ctx.ID().getSymbol());
+    }
+
+    public void exitVarDeclaration(MiniJavaParser.VarDeclarationContext ctx) {
+        defineVar(ctx.type(), ctx.ID().getSymbol());
+    }
+
+    void defineVar(MiniJavaParser.TypeContext typeCtx, Token nameToken) {
+        int typeTokenType = typeCtx.start.getType();
+        Symbol.Type type = CheckSymbols.getType(typeTokenType);
+        VariableSymbol var = new VariableSymbol(nameToken.getText(), type);
+        currentScope.define(var);
     }
 }
