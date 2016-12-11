@@ -13,26 +13,26 @@ public class ErrorReporter extends MiniJavaBaseErrorListener {
     public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInline,
                             String msg, RecognitionException e) {
 
-        this.errorHandler(recognizer, offendingSymbol, line, charPositionInline, msg, e);
+        this.errorReporter(recognizer, offendingSymbol, line, charPositionInline, msg, e);
         this.underlineError(recognizer, (Token) offendingSymbol, line, charPositionInline);
     }
 
-    private void errorHandler(Recognizer recognizer, Object offendingSymbol, int line, int charPositionInline,
+    private void errorReporter(Recognizer recognizer, Object offendingSymbol, int line, int charPositionInline,
                               String msg, RecognitionException e) {
         System.out.println(e);
         if (e instanceof InputMismatchException) {
-            this.handleInputMismatchException(recognizer, offendingSymbol, line, charPositionInline, msg, e);
+            this.reportInputMismatchException(recognizer, offendingSymbol, line, charPositionInline, msg, e);
         } else {
             System.err.println("line " + line + ":" + charPositionInline + " at " + offendingSymbol + ": " + msg);
         }
     }
 
-    private void handleInputMismatchException(Recognizer recognizer, Object offendingSymbol, int line,
+    private void reportInputMismatchException(Recognizer recognizer, Object offendingSymbol, int line,
                                               int charPositionInline, String msg, RecognitionException e) {
         CommonToken token = (CommonToken)e.getOffendingToken();
         IntervalSet expectedTokens = e.getExpectedTokens();
         Vocabulary vocabulary = recognizer.getVocabulary();
-        String shouldBe = this.handleKeywordMismatchException(token.getText(), expectedTokens.toString(vocabulary));
+        String shouldBe = this.reportKeywordMismatchException(token.getText(), expectedTokens.toString(vocabulary));
         if (!shouldBe.equals("")) {
             System.err.println("[Lexical Error]: line "+line+":"+charPositionInline + "\n\tWrong Keyword: " + token.getText()
                     + "\tExpected Tokens: " + expectedTokens.toString(vocabulary) + "\n\tSuggested Keyword: " + shouldBe);
@@ -41,7 +41,7 @@ public class ErrorReporter extends MiniJavaBaseErrorListener {
         }
     }
 
-    private String handleKeywordMismatchException(String wrongWord, String expectedTokens) {
+    private String reportKeywordMismatchException(String wrongWord, String expectedTokens) {
         String[] expected = expectedTokens.replace("{", "").replace("}", "").split(",");
         double maxSimilarity = 0.5;
         String similarest = "";
