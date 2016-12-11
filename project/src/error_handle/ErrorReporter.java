@@ -8,7 +8,7 @@ import org.antlr.v4.runtime.misc.IntervalSet;
  * Created by SorosLiu on 16/12/10.
  */
 
-public class ErrorHandler extends MiniJavaBaseErrorListener {
+public class ErrorReporter extends MiniJavaBaseErrorListener {
     @Override
     public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInline,
                             String msg, RecognitionException e) {
@@ -19,6 +19,7 @@ public class ErrorHandler extends MiniJavaBaseErrorListener {
 
     private void errorHandler(Recognizer recognizer, Object offendingSymbol, int line, int charPositionInline,
                               String msg, RecognitionException e) {
+        System.out.println(e);
         if (e instanceof InputMismatchException) {
             this.handleInputMismatchException(recognizer, offendingSymbol, line, charPositionInline, msg, e);
         } else {

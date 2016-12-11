@@ -20,7 +20,7 @@ public class MiniJavaCompiler {
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         MiniJavaParser parser = new MiniJavaParser(tokens);
         parser.removeErrorListeners();
-        parser.addErrorListener(new ErrorHandler());
+        parser.addErrorListener(new ErrorReporter());
         parser.goal();
     }
 }
