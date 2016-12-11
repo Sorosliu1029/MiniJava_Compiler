@@ -3,6 +3,9 @@ package error_handle;
 import compiler_utils.LevenshteinDistance;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.IntervalSet;
+import recognition_exceptions.OperandMissingException;
+import recognition_exceptions.ParenthesisDismatchException;
+import recognition_exceptions.SemicolonMissingException;
 
 /**
  * Created by SorosLiu on 16/12/10.
@@ -19,9 +22,15 @@ public class ErrorReporter extends MiniJavaBaseErrorListener {
 
     private void errorReporter(Recognizer recognizer, Object offendingSymbol, int line, int charPositionInline,
                               String msg, RecognitionException e) {
-        System.out.println(e.getClass());
+        System.out.println(e);
         if (e instanceof InputMismatchException) {
             this.reportInputMismatchException(recognizer, offendingSymbol, line, charPositionInline, msg, e);
+        } else if (e instanceof OperandMissingException) {
+            System.err.println("[Syntax Error]: line " + line + ":" + charPositionInline + "\t" + msg);
+        } else if (e instanceof ParenthesisDismatchException) {
+            System.err.println("[Syntax Error]: line " + line + ":" + charPositionInline + "\t" + msg);
+        } else if (e instanceof SemicolonMissingException) {
+            System.err.println("[Syntax Error]: line " + line + ":" + charPositionInline + "\t" + msg);
         } else {
             System.err.println("line " + line + ":" + charPositionInline + " at " + offendingSymbol + ": " + msg);
         }
@@ -29,13 +38,13 @@ public class ErrorReporter extends MiniJavaBaseErrorListener {
 
     private void reportInputMismatchException(Recognizer recognizer, Object offendingSymbol, int line,
                                               int charPositionInline, String msg, RecognitionException e) {
-        CommonToken token = (CommonToken)e.getOffendingToken();
+        CommonToken token = (CommonToken) e.getOffendingToken();
         IntervalSet expectedTokens = e.getExpectedTokens();
         Vocabulary vocabulary = recognizer.getVocabulary();
         String shouldBe = this.reportKeywordMismatchException(token.getText(), expectedTokens.toString(vocabulary));
         if (!shouldBe.equals("")) {
-            System.err.println("[Lexical Error]: line "+line+":"+charPositionInline + "\n\tWrong Keyword: " + token.getText()
-                    + "\tExpected Tokens: " + expectedTokens.toString(vocabulary) + "\n\tSuggested Keyword: " + shouldBe);
+            System.err.println("[Lexical Error]: line " + line + ":" + charPositionInline + "\tWrong Keyword: " + token.getText()
+                    + "\tExpected Tokens: " + expectedTokens.toString(vocabulary) + "\tSuggested Keyword: " + shouldBe);
         } else {
             System.err.println("line " + line + ":" + charPositionInline + " at " + offendingSymbol + ": " + msg);
         }

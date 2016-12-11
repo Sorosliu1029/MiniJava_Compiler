@@ -21,6 +21,7 @@ public class MiniJavaCompiler {
         MiniJavaParser parser = new MiniJavaParser(tokens);
         parser.removeErrorListeners();
         parser.addErrorListener(new ErrorReporter());
+        parser.setErrorHandler(new MiniJavaDefaultErrorStrategy());
         parser.goal();
     }
 }

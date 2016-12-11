@@ -83,7 +83,7 @@ expression: expression ('&&' | '<' | '+' | '-' | '*' ) expression
 ID: LETTER (LETTER|DIGIT|'_')*
     // invalid identifier
     | DIGIT (LETTER|DIGIT|'_')* (LETTER|'_')+
-            {System.err.println("[Lexical Error]:\n\tIdentifier cannot start with number: " + getText());}
+            {System.err.println("[Lexical Error]:\tIdentifier cannot start with number: " + getText());}
     ;
 fragment LETTER  : [a-zA-Z] ;
 fragment DIGIT   : [0-9] ;

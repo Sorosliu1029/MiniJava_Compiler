@@ -117,7 +117,7 @@ public class MiniJavaLexer extends Lexer {
 	private void ID_action(RuleContext _localctx, int actionIndex) {
 		switch (actionIndex) {
 		case 0:
-			System.err.println("[Lexical Error]:\n\tIdentifier cannot start with number: " + getText());
+			System.err.println("[Lexical Error]:\tIdentifier cannot start with number: " + getText());
 			break;
 		}
 	}
