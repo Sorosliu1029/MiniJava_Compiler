@@ -1,5 +1,8 @@
 grammar MiniJava;
 
+@header {
+import recognition_exceptions.*;
+}
 //start rule: goal
 goal: packageDeclaration? (importDeclaration)* mainClass (classDeclaration)* ;
 
@@ -46,14 +49,26 @@ statement: '{' (statement)* '}'
           ;
 
 expression: expression ('&&' | '<' | '+' | '-' | '*' ) expression
-           | expression ('&&' | '<' | '+' | '-' | '*' )    {notifyErrorListeners("Missing right operand");}
-           | ('&&' | '<' | '+' | '-' | '*' ) expression    {notifyErrorListeners("Missing left operand");}
+           | expression ('&&' | '<' | '+' | '-' | '*' )
+                {notifyErrorListeners(this.getCurrentToken(),
+                    "Missing right operand",
+                    new OperandMissingException(this));}
+           | ('&&' | '<' | '+' | '-' | '*' ) expression
+                {notifyErrorListeners(this.getCurrentToken(),
+                    "Missing left operand",
+                    new OperandMissingException(this));}
            | expression '[' expression ']'
            | expression '.' 'length'
            | expression '.' ID '(' (expression (',' expression)* )? ')'
             // parenthesis dismatch in function call
-           | expression '.' ID '(' (expression (',' expression)* )? ')' ')' {notifyErrorListeners("Too many parentheses");}
-           | expression '.' ID '(' (expression (',' expression)* )?         {notifyErrorListeners("Missing closing ')'");}
+           | expression '.' ID '(' (expression (',' expression)* )? ')' ')'
+                {notifyErrorListeners(this.getCurrentToken(),
+                    "Too many parentheses",
+                    new ParenthesisDismatchException(this));}
+           | expression '.' ID '(' (expression (',' expression)* )?
+                {notifyErrorListeners(this.getCurrentToken(),
+                    "Missing closing ')'",
+                    new ParenthesisDismatchException(this));}
            | INT
            | 'true'
            | 'false'
@@ -67,7 +82,8 @@ expression: expression ('&&' | '<' | '+' | '-' | '*' ) expression
 
 ID: LETTER (LETTER|DIGIT|'_')*
     // invalid identifier
-    | DIGIT (LETTER|DIGIT|'_')* (LETTER|'_')+         {System.err.println("[Lexical Error]:\n\tIdentifier cannot start with number: " + getText());}
+    | DIGIT (LETTER|DIGIT|'_')* (LETTER|'_')+
+            {System.err.println("[Lexical Error]:\n\tIdentifier cannot start with number: " + getText());}
     ;
 fragment LETTER  : [a-zA-Z] ;
 fragment DIGIT   : [0-9] ;

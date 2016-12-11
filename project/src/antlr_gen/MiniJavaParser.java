@@ -1,5 +1,8 @@
 // Generated from MiniJava.g4 by ANTLR 4.5.3
 package antlr_gen;
+
+import recognition_exceptions.*;
+
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -954,7 +957,9 @@ public class MiniJavaParser extends Parser {
 				}
 				setState(192);
 				expression(15);
-				notifyErrorListeners("Missing left operand");
+				notifyErrorListeners(this.getCurrentToken(),
+				                    "Missing left operand",
+				                    new OperandMissingException(this));
 				}
 				break;
 			case 2:
@@ -1074,7 +1079,9 @@ public class MiniJavaParser extends Parser {
 						} else {
 							consume();
 						}
-						notifyErrorListeners("Missing right operand");
+						notifyErrorListeners(this.getCurrentToken(),
+						                              "Missing right operand",
+						                              new OperandMissingException(this));
 						}
 						break;
 					case 3:
@@ -1185,7 +1192,9 @@ public class MiniJavaParser extends Parser {
 						match(T__15);
 						setState(262);
 						match(T__15);
-						notifyErrorListeners("Too many parentheses");
+						notifyErrorListeners(this.getCurrentToken(),
+						                              "Too many parentheses",
+						                              new ParenthesisDismatchException(this));
 						}
 						break;
 					case 7:
@@ -1228,7 +1237,9 @@ public class MiniJavaParser extends Parser {
 							}
 							break;
 						}
-						notifyErrorListeners("Missing closing ')'");
+						notifyErrorListeners(this.getCurrentToken(),
+						                              "Missing closing ')'",
+						                              new ParenthesisDismatchException(this));
 						}
 						break;
 					}
