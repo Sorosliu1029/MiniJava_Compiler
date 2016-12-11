@@ -8,7 +8,7 @@ import org.antlr.v4.runtime.misc.IntervalSet;
  * Created by SorosLiu on 16/12/10.
  */
 
-public class LexicalErrorHandler extends MiniJavaBaseErrorListener {
+public class ErrorHandler extends MiniJavaBaseErrorListener {
     @Override
     public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInline,
                             String msg, RecognitionException e) {
