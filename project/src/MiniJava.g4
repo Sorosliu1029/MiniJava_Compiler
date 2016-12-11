@@ -46,6 +46,8 @@ statement: '{' (statement)* '}'
           ;
 
 expression: expression ('&&' | '<' | '+' | '-' | '*' ) expression
+           | expression ('&&' | '<' | '+' | '-' | '*' )    {notifyErrorListeners("Missing right operand");}
+           | ('&&' | '<' | '+' | '-' | '*' ) expression    {notifyErrorListeners("Missing left operand");}
            | expression '[' expression ']'
            | expression '.' 'length'
            | expression '.' ID '(' (expression (',' expression)* )? ')'
