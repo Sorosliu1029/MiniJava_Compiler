@@ -8,7 +8,7 @@
 ***/
 package compiler_utils;
 public class Symbol { // A generic programming language symbol
-    public static enum Type {tINVALID, tVOID, tINT, tFLOAT}
+    public static enum Type {tINVALID, tINTARRAY, tINT, tBOOLEAN, tCLASS}
 
     String name;      // All symbols at least have a name
     Type type;

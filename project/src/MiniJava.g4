@@ -84,6 +84,10 @@ expression: expression ('&&' | '<' | '+' | '-' | '*' ) expression
            | '(' expression ')'
            ;
 
+K_INT_ARRAY: 'int' '[' ']' ;
+K_INT: 'int' ;
+K_BOOLEAN: 'boolean' ;
+
 ID: LETTER (LETTER|DIGIT|'_')*
     // invalid identifier
     | DIGIT (LETTER|DIGIT|'_')* (LETTER|'_')+
