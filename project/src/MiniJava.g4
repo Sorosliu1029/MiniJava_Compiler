@@ -23,11 +23,15 @@ classDeclaration: 'class' ID ('extends' ID)? '{'
 
 varDeclaration: type ID ';' ;
 
-methodDeclaration: 'public' type ID '(' (type ID (',' type ID)* )? ')' '{'
+methodDeclaration: 'public' type ID '(' formalParameters? ')' '{'
                         (varDeclaration)*
                         (statement)*
                         'return' expression ';'
                     '}' ;
+
+formalParameters:  formalParameter (',' formalParameter)* ;
+
+formalParameter: type ID ;
 
 type: 'int' '[' ']'
      | 'boolean'

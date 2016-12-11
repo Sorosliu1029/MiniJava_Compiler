@@ -1,8 +1,10 @@
 package compiler_front;
 
-import antlr_gen.*;
-import error_handle.*;
-import org.antlr.v4.runtime.*;
+import antlr_gen.MiniJavaLexer;
+import antlr_gen.MiniJavaParser;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import validation.CheckSymbols;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -19,9 +21,10 @@ public class MiniJavaCompiler {
         MiniJavaLexer lexer = new MiniJavaLexer(new ANTLRInputStream(is));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         MiniJavaParser parser = new MiniJavaParser(tokens);
-        parser.removeErrorListeners();
-        parser.addErrorListener(new ErrorReporter());
-        parser.setErrorHandler(new MiniJavaDefaultErrorStrategy());
-        parser.goal();
+//        parser.removeErrorListeners();
+//        parser.addErrorListener(new ErrorReporter());
+//        parser.setErrorHandler(new MiniJavaDefaultErrorStrategy());
+//        parser.goal();
+        new CheckSymbols().process(parser);
     }
 }
