@@ -5,3 +5,4 @@ javac -sourcepath src src/antlr_gen/MiniJava*.java \
                       src/compiler_front/*.java \
                       src/compiler_utils/*.java \
                       -d out
+echo "Compiling succeed"

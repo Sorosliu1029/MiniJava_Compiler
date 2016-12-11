@@ -22,7 +22,7 @@ public class ErrorReporter extends MiniJavaBaseErrorListener {
 
     private void errorReporter(Recognizer recognizer, Object offendingSymbol, int line, int charPositionInline,
                                String msg, RecognitionException e) {
-        System.out.println(e);
+//        System.out.println(e);
         if (e instanceof InputMismatchException) {
             this.reportInputMismatchException(recognizer, offendingSymbol, line, charPositionInline, msg, e);
         } else if (e instanceof OperandMissingException) {

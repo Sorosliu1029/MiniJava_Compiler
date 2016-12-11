@@ -17,18 +17,23 @@ import java.io.InputStream;
  */
 public class MiniJavaCompiler {
     public static void main(String[] args) throws Exception {
-        String inputFile = null;
-        if (args.length > 0) inputFile = args[0];
-        InputStream is = System.in;
-        if (inputFile != null) is = new FileInputStream(inputFile);
-        MiniJavaLexer lexer = new MiniJavaLexer(new ANTLRInputStream(is));
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-        MiniJavaParser parser = new MiniJavaParser(tokens);
-        parser.setBuildParseTree(true);
-        parser.removeErrorListeners();
-        parser.addErrorListener(new ErrorReporter());
-        parser.setErrorHandler(new MiniJavaDefaultErrorStrategy());
-        ParseTree tree = parser.goal();
-        new CheckSymbols().process(tree);
+        try {
+            String inputFile = null;
+            if (args.length > 0) inputFile = args[0];
+            InputStream is = System.in;
+            if (inputFile != null) is = new FileInputStream(inputFile);
+            MiniJavaLexer lexer = new MiniJavaLexer(new ANTLRInputStream(is));
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+            MiniJavaParser parser = new MiniJavaParser(tokens);
+            parser.setBuildParseTree(true);
+            parser.removeErrorListeners();
+            parser.addErrorListener(new ErrorReporter());
+            parser.setErrorHandler(new MiniJavaDefaultErrorStrategy());
+            ParseTree tree = parser.goal();
+            new CheckSymbols().process(tree);
+        } catch (NullPointerException e) {
+            ;
+        }
+
     }
 }
