@@ -54,36 +54,36 @@ statement: '{' (statement)* '}'
           | varDeclaration
           ;
 
-expression: expression ('&&' | '<' | '+' | '-' | '*' ) expression
+expression: expression ('&&' | '<' | '+' | '-' | '*' ) expression   #BinOp
            | expression ('&&' | '<' | '+' | '-' | '*' )
                 {notifyErrorListeners(this.getCurrentToken(),
                     "Missing right operand",
-                    new OperandMissingException(this));}
+                    new OperandMissingException(this));}            #BinOpMissRight
            | ('&&' | '<' | '+' | '-' | '*' ) expression
                 {notifyErrorListeners(this.getCurrentToken(),
                     "Missing left operand",
-                    new OperandMissingException(this));}
-           | expression '[' expression ']'
-           | expression '.' 'length'
-           | expression '.' ID '(' (expression (',' expression)* )? ')'
+                    new OperandMissingException(this));}            #BinOpMissLeft
+           | expression '[' expression ']'                          #SubscriptAccess
+           | expression '.' 'length'                                #ArrayLength
+           | expression '.' ID '(' (expression (',' expression)* )? ')' #Call
             // parenthesis dismatch in function call
            | expression '.' ID '(' (expression (',' expression)* )? ')' ')'
                 {notifyErrorListeners(this.getCurrentToken(),
                     "Too many parentheses",
-                    new ParenthesisDismatchException(this));}
+                    new ParenthesisDismatchException(this));}           #CallMoreParetheses
            | expression '.' ID '(' (expression (',' expression)* )?
                 {notifyErrorListeners(this.getCurrentToken(),
                     "Missing closing ')'",
-                    new ParenthesisDismatchException(this));}
-           | INT
-           | 'true'
-           | 'false'
-           | ID
-           | 'this'
-           | 'new' 'int' '[' expression ']'
-           | 'new' ID '(' ')'
-           | '!' expression
-           | '(' expression ')'
+                    new ParenthesisDismatchException(this));}           #CallLessParenteses
+           | INT                                #Int
+           | 'true'                             #True
+           | 'false'                            #False
+           | ID                                 #Id
+           | 'this'                             #This
+           | 'new' 'int' '[' expression ']'     #InstanceArray
+           | 'new' ID '(' ')'                   #InstanceClass
+           | '!' expression                     #Not
+           | '(' expression ')'                 #Parentheses
            ;
 
 K_INT_ARRAY: 'int' '[' ']' ;

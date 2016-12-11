@@ -2,8 +2,11 @@ package compiler_front;
 
 import antlr_gen.MiniJavaLexer;
 import antlr_gen.MiniJavaParser;
+import error_handle.ErrorReporter;
+import error_handle.MiniJavaDefaultErrorStrategy;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
 import validation.CheckSymbols;
 
 import java.io.FileInputStream;
@@ -21,10 +24,11 @@ public class MiniJavaCompiler {
         MiniJavaLexer lexer = new MiniJavaLexer(new ANTLRInputStream(is));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         MiniJavaParser parser = new MiniJavaParser(tokens);
-//        parser.removeErrorListeners();
-//        parser.addErrorListener(new ErrorReporter());
-//        parser.setErrorHandler(new MiniJavaDefaultErrorStrategy());
-//        parser.goal();
-        new CheckSymbols().process(parser);
+        parser.setBuildParseTree(true);
+        parser.removeErrorListeners();
+        parser.addErrorListener(new ErrorReporter());
+        parser.setErrorHandler(new MiniJavaDefaultErrorStrategy());
+        ParseTree tree = parser.goal();
+        new CheckSymbols().process(tree);
     }
 }

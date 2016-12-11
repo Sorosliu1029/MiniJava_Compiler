@@ -2,6 +2,7 @@ package validation;
 
 import antlr_gen.MiniJavaParser;
 import compiler_utils.Symbol;
+import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
@@ -23,12 +24,15 @@ public class CheckSymbols {
         return Symbol.Type.tINVALID;
     }
 
-    public void process(MiniJavaParser parser) {
-        parser.setBuildParseTree(true);
-        ParseTree tree = parser.goal();
+    public static void error(Token t, String msg) {
+        System.err.println("[Semantic Error]: line " + t.getLine() + ":" + t.getCharPositionInLine() + "\t" + msg);
+    }
 
+    public void process(ParseTree tree) {
         ParseTreeWalker walker = new ParseTreeWalker();
         DefPhase def = new DefPhase();
         walker.walk(def, tree);
+        RefPhase ref = new RefPhase(def.globals, def.scopes);
+        walker.walk(ref, tree);
     }
 }

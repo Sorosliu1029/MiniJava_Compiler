@@ -21,7 +21,7 @@ public class DefPhase extends MiniJavaBaseListener {
     }
 
     public void exitGoal(MiniJavaParser.GoalContext ctx) {
-        System.out.println(globals);
+//        System.out.println(globals);
     }
 
     public void enterMethodDeclaration(MiniJavaParser.MethodDeclarationContext ctx) {
@@ -40,7 +40,7 @@ public class DefPhase extends MiniJavaBaseListener {
     }
 
     public void exitMethodDeclaration(MiniJavaParser.MethodDeclarationContext ctx) {
-        System.out.println(currentScope);
+//        System.out.println(currentScope);
         currentScope = currentScope.getEnclosingScope();
     }
 
@@ -50,7 +50,7 @@ public class DefPhase extends MiniJavaBaseListener {
     }
 
     public void exitMethodBlock(MiniJavaParser.MethodBlockContext ctx) {
-        System.out.println(currentScope);
+//        System.out.println(currentScope);
         currentScope = currentScope.getEnclosingScope();
     }
 
