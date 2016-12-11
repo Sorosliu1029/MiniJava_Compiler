@@ -38,7 +38,29 @@ public class RefPhase extends MiniJavaBaseListener {
         currentScope = currentScope.getEnclosingScope();
     }
 
-    public void exitVarDeclaration(MiniJavaParser.VarDeclarationContext ctx) {
+    public void exitId(MiniJavaParser.IdContext ctx) {
+        String name = ctx.ID().getSymbol().getText();
+        Symbol var = currentScope.resolve(name);
+        if (var == null) {
+            CheckSymbols.error(ctx.ID().getSymbol(), "No Such Variable: " + name);
+        }
+        if (var instanceof FunctionSymbol) {
+            CheckSymbols.error(ctx.ID().getSymbol(), "Not A Variable: " + name);
+        }
+    }
+
+    public void exitStatAssign(MiniJavaParser.StatAssignContext ctx) {
+        String name = ctx.ID().getSymbol().getText();
+        Symbol var = currentScope.resolve(name);
+        if (var == null) {
+            CheckSymbols.error(ctx.ID().getSymbol(), "No Such Variable: " + name);
+        }
+        if (var instanceof FunctionSymbol) {
+            CheckSymbols.error(ctx.ID().getSymbol(), "Not A Variable: " + name);
+        }
+    }
+
+    public void exitStatArray(MiniJavaParser.StatArrayContext ctx) {
         String name = ctx.ID().getSymbol().getText();
         Symbol var = currentScope.resolve(name);
         if (var == null) {

@@ -41,17 +41,17 @@ type: 'int[]'
      | ID
      ;
 
-statement: '{' (statement)* '}'
+statement: '{' (statement)* '}'                             #StatParentheses
           | 'if' '(' expression ')'
                 statement
             'else'
-                statement
+                statement                                   #StatIf
           | 'while' '(' expression ')'
-                statement
-          | 'System.out.println' '(' expression ')' ';'
-          | ID '=' expression ';'
-          | ID '[' expression ']' '=' expression ';'
-          | varDeclaration
+                statement                                   #StatWhile
+          | 'System.out.println' '(' expression ')' ';'     #StatPrint
+          | ID '=' expression ';'                           #StatAssign
+          | ID '[' expression ']' '=' expression ';'        #StatArray
+          | varDeclaration                                  #StatVarDecl
           ;
 
 expression: expression ('&&' | '<' | '+' | '-' | '*' ) expression   #BinOp

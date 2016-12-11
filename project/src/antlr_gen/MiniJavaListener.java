@@ -121,15 +121,89 @@ public interface MiniJavaListener extends ParseTreeListener {
 	 */
 	void exitType(MiniJavaParser.TypeContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MiniJavaParser#statement}.
+	 * Enter a parse tree produced by the {@code StatParentheses}
+	 * labeled alternative in {@link MiniJavaParser#statement}.
 	 * @param ctx the parse tree
 	 */
-	void enterStatement(MiniJavaParser.StatementContext ctx);
+	void enterStatParentheses(MiniJavaParser.StatParenthesesContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MiniJavaParser#statement}.
+	 * Exit a parse tree produced by the {@code StatParentheses}
+	 * labeled alternative in {@link MiniJavaParser#statement}.
 	 * @param ctx the parse tree
 	 */
-	void exitStatement(MiniJavaParser.StatementContext ctx);
+	void exitStatParentheses(MiniJavaParser.StatParenthesesContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code StatIf}
+	 * labeled alternative in {@link MiniJavaParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterStatIf(MiniJavaParser.StatIfContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code StatIf}
+	 * labeled alternative in {@link MiniJavaParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitStatIf(MiniJavaParser.StatIfContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code StatWhile}
+	 * labeled alternative in {@link MiniJavaParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterStatWhile(MiniJavaParser.StatWhileContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code StatWhile}
+	 * labeled alternative in {@link MiniJavaParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitStatWhile(MiniJavaParser.StatWhileContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code StatPrint}
+	 * labeled alternative in {@link MiniJavaParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterStatPrint(MiniJavaParser.StatPrintContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code StatPrint}
+	 * labeled alternative in {@link MiniJavaParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitStatPrint(MiniJavaParser.StatPrintContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code StatAssign}
+	 * labeled alternative in {@link MiniJavaParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterStatAssign(MiniJavaParser.StatAssignContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code StatAssign}
+	 * labeled alternative in {@link MiniJavaParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitStatAssign(MiniJavaParser.StatAssignContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code StatArray}
+	 * labeled alternative in {@link MiniJavaParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterStatArray(MiniJavaParser.StatArrayContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code StatArray}
+	 * labeled alternative in {@link MiniJavaParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitStatArray(MiniJavaParser.StatArrayContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code StatVarDecl}
+	 * labeled alternative in {@link MiniJavaParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterStatVarDecl(MiniJavaParser.StatVarDeclContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code StatVarDecl}
+	 * labeled alternative in {@link MiniJavaParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitStatVarDecl(MiniJavaParser.StatVarDeclContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code Call}
 	 * labeled alternative in {@link MiniJavaParser#expression}.
